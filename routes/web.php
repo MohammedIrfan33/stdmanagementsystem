@@ -1,10 +1,27 @@
 <?php
 
+use App\Models\Course;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentController;
+
+
+
+
+
+
 
 Route::get('/', function () {
-    return view('index');
+
+    $students =  Student::all();
+
+  
+    return view('index',['students'=> $students
+
+]);
 })->name('home');
+
+
 
 
 Route::get('about', function () {
@@ -29,58 +46,25 @@ Route::get('add-course', function () {
 })->name('add-course');
 
 
-Route::get('course', function () {
+Route::get('course', function ()  {
+    
 
-    $courses = [
-        [
-            'name' => 'Web Development',
-            'duration' => '6 months',
-            'fees' => 30000,
-            'status' => 'active'
-        ],
-        [
-            'name' => 'Data Science',
-            'duration' => '1 year',
-            'fees' => 60000,
-            'status' => 'active'
-        ],
-        [
-            'name' => 'Graphic Design',
-            'duration' => '3 months',
-            'fees' => 15000,
-            'status' => 'inactive'
-        ],
-        [
-            'name' => 'Cyber Security',
-            'duration' => '8 months',
-            'fees' => 40000,
-            'status' => 'active'
-        ],
-        [
-            'name' => 'Android App Development',
-            'duration' => '5 months',
-            'fees' => 25000,
-            'status' => 'inactive'
-        ],
-        [
-            'name' => 'Digital Marketing',
-            'duration' => '4 months',
-            'fees' => 20000,
-            'status' => 'active'
-        ],
-        [
-            'name' => 'Machine Learning',
-            'duration' => '10 months',
-            'fees' => 55000,
-            'status' => 'active'
-        ],
-        [
-            'name' => 'UI/UX Design',
-            'duration' => '4 months',
-            'fees' => 18000,
-            'status' => 'inactive'
-        ]
-    ];
+    $courses =  Course::all();
+
+
+
+
+    
    
     return view('course',['courses'=>$courses]);
 })->name('course');
+
+
+Route::get('edit-course/{id}', function ($id)  {
+
+
+    $course=Course::find($id);
+    
+    return view('edit_course',['course' => $course]);
+
+})->name('edit-course');
