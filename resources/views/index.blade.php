@@ -42,17 +42,19 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $student->phone}}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-800 align-middle">{{$student->course ? $student->course->name : 'No Course' }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $student->course ? $student->course->duration : 'N/A' }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $student->joining_date }}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gra-600 align-middle">{{ $student->joining_date_formatted }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $student->end_date  }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">15 Days</td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">₹15,000</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium align-middle opacity-70">
+    {{ $student->balance_day }}
+</td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">₹{{ $student->course->fees }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-red-600 align-middle">₹5,000</td>
           <td class="px-6 py-4 whitespace-nowrap align-middle">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
               <svg class="w-2.5 h-2.5 mr-1.5" fill="currentColor" viewBox="0 0 8 8">
                 <circle cx="4" cy="4" r="3" />
               </svg>
-              Active
+              {{ $student->status }}
             </span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">

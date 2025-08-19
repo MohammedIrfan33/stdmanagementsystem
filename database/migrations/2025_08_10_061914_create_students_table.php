@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
-            $table->date('joining_date');
+            $table->date(column: 'joining_date');
 
             // Foreign key to courses table
             $table->unsignedBigInteger('course_id');
@@ -24,6 +24,7 @@ return new class extends Migration
                   ->references('id')
                   ->on('courses')
                   ->onDelete('cascade');
+            $table->enum('status', ['ongoing', 'completed'])->default('ongoing');
 
             $table->timestamps();
         });

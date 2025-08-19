@@ -10,11 +10,16 @@ class Student extends Model
 {
     use HasFactory;
 
-    
+
+    protected $casts = [
+        'joining_date' => 'date',
+    ];
+
+
 
     public function fees()
     {
-        return $this->hasMany(Fee::class); 
+        return $this->hasMany(Fee::class);
     }
 
     public function course()
@@ -23,14 +28,14 @@ class Student extends Model
     }
 
 
-    public function getJoiningDateAttribute()
-{
-    $rawDate = $this->attributes['joining_date'] ?? null;
+    public function getJoiningDateFormattedAttribute()
+    {
+        return $this->joining_date->format('d M, Y');
+    }
 
-    return $rawDate
-        ? Carbon::parse($rawDate)->format('d M, Y')
-        : null;
-}
+
+
+
 
 
     // Accessor for End Dat
@@ -40,12 +45,34 @@ class Student extends Model
             $durationParts = explode(' ', strtolower(trim($this->course->duration)));
 
             $number = (int) $durationParts[0];
-            $unit = $durationParts[1] ?? 'month';
 
-            return Carbon::parse($this->joining_date)->add($number, $unit)->format('d M, Y');
+
+            $endDate = $this->joining_date->addMonths($number);
+
+            return $endDate->format('d M, Y');
         }
 
         return null;
     }
-    
+
+
+    public function getBalanceDayAttribute()
+    {
+
+        $end = $this->end_date; 
+        $DateEnd =  Carbon::createFromFormat('d M, Y', $end);;
+        $today = Carbon::now();
+
+
+        $balnceDays = $today->diffInDays($DateEnd, false, true);
+
+
+
+
+
+
+
+        return ceil($balnceDays).' days';
+    }
+
 }
