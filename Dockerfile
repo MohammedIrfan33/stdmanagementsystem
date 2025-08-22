@@ -24,7 +24,9 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # Copy existing application code
-COPY . .
+COPY . /var/www/html
+
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
