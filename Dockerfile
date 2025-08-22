@@ -20,6 +20,10 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache mod_rewrite (needed for Laravel routing)
 RUN a2enmod rewrite
 
+RUN mkdir -p database \
+    && touch database/database.sqlite \
+    && chown www-data:www-data database/database.sqlite
+
 # Set working directory
 WORKDIR /var/www/html
 
