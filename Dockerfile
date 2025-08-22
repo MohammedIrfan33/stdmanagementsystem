@@ -1,29 +1,20 @@
-# Use official PHP with Apache
-FROM php:8.2-apache
+# Use an official Laravel-friendly PHP + Apache image
+FROM richarvey/nginx-php-fpm:latest
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpq-dev libonig-dev libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
-
-# Enable Apache mod_rewrite (for Laravel routes)
-RUN a2enmod rewrite
-
-# Copy project files
+# Set working directory
 WORKDIR /var/www/html
+
+# Copy everything
 COPY . .
 
-# Install Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
-
-# Install Laravel dependencies
+# Install dependencies with Composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions for Laravel
+# Fix permissions for Laravel
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port (Render uses 10000 internally)
+# Expose Render’s port
 EXPOSE 10000
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Start Nginx + PHP-FPM
+CMD ["/start.sh"]
