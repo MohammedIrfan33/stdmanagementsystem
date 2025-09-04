@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,7 @@ use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
 
-    $students =  Student::all();
+    $students =  Student::with('course')->get();
 
   
     return view('index',['students'=> $students
@@ -40,31 +41,9 @@ Route::get('add', function () {
     return view('add');
 })->name('add');
 
+Route::get('course', [CourseController::class, 'index'])->name('course');
 
-Route::get('add-course', function () {
-    return view('add_course');
-})->name('add-course');
-
-
-Route::get('course', function ()  {
-    
-
-    $courses =  Course::all();
+Route::get('add-cours',[CourseController::class,'create'])->name('add-course');
 
 
-
-
-    
-   
-    return view('course',['courses'=>$courses]);
-})->name('course');
-
-
-Route::get('edit-course/{id}', function ($id)  {
-
-
-    $course=Course::find($id);
-    
-    return view('edit_course',['course' => $course]);
-
-})->name('edit-course');
+Route::get('edit-course/{id}',[CourseController::class , 'edit'])->name('edit-course');
