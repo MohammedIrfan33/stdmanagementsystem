@@ -7,23 +7,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 
 
+Route::get('/', [StudentController::class, 'index'])->name('home');
 
-
-
-
-
-Route::get('/', function () {
-
-    $students =  Student::with('course')->get();
-
-  
-    return view('index',['students'=> $students
-
-]);
-})->name('home');
-
-
-
+Route::get('student/create', [StudentController::class, 'create'])->name('add-student');
+Route::post('student', [StudentController::class, 'create'])->name('store');
+Route::get('student/edit', [StudentController::class, 'edit'])->name('edit');
+Route::delete('student/${id}/delete', [StudentController::class, 'delete'])->name('delete');
 
 Route::get('about', function () {
     return view('about');
@@ -31,19 +20,9 @@ Route::get('about', function () {
 
 
 
-Route::get('update', function () {
-    return view('edit');
-})->name('edit');
-
-
-
-Route::get('add', function () {
-    return view('add');
-})->name('add');
-
-Route::get('course', [CourseController::class, 'index'])->name('course');
-
-Route::get('add-cours',[CourseController::class,'create'])->name('add-course');
-
-
-Route::get('edit-course/{id}',[CourseController::class , 'edit'])->name('edit-course');
+Route::get('courses', [CourseController::class, 'index'])->name('course');
+Route::get('courses/create', [CourseController::class, 'create'])->name('add-course');
+Route::post('courses', [CourseController::class, 'store'])->name('course-add');
+Route::get('courses/edit/{id}', [CourseController::class, 'edit'])->name('edit-course');
+Route::patch('courses/update/{id}', [CourseController::class, 'update'])->name('update-course');
+Route::delete('courses/delete/{id}', [CourseController::class, 'distroy'])->name('delete-course');

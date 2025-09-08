@@ -10,27 +10,51 @@ class CourseController extends Controller
      public function index(){
 
 
-      $courses =  Course::all();
+      $courses =  Course::latest()->get();
 
-      return view('course',['courses'=>$courses]);
+      return view('course.index',['courses'=>$courses]);
         
      }
 
 
      public function create(){
 
-      return view('add_course');
+
+
+      return view('course.create');
         //create an course
      }
 
-     public function store(){
-        //store course in to db
+     public function store()
+     {
+
+      
+
+         // Validate form inputs
+         $validated = request()->validate([
+             'course_name' => 'required|string|max:255',
+             'duration'    => 'required|string|max:100',
+             'fee'         => 'required|numeric|min:0',
+             'status'      => 'required|in:0,1',
+         ]);
+     
+         
+         Course::create([
+             'name'     => $validated['course_name'],
+             'duration' => $validated['duration'],
+             'fees'     => $validated['fee'],
+             'status'   => $validated['status'],
+         ]);
+     
+      
+         return redirect('/courses')->with('success', 'Course added successfully!');
      }
+     
 
      public function  edit($id){
       $course=Course::find($id);
     
-      return view('edit_course',['course' => $course]);
+      return view('course.update',['course' => $course]);
      }
 
      public  function show() {
@@ -39,11 +63,43 @@ class CourseController extends Controller
      }
 
 
-     public function  update(){
-        //update course  in  db
-     }
+     public function update($id)
+     {
+        
+         $validated = request()->validate([
+             'course_name' => 'required|string|max:255',
+             'duration'    => 'required|string|max:100',
+             'fee'         => 'required|numeric|min:0',
+             'status'      => 'required|in:1,0',
+         ]);
 
-     public function distroy(){
-        //delete course  in db 
+
+         $course = Course::find($id);
+     
+         if (!$course) {
+             return redirect('/courses')->with('error', 'Course not found!');
+         }
+     
+         
+         $course->update([
+             'name'     => $validated['course_name'],
+             'duration' => $validated['duration'],
+             'fees'     => $validated['fee'],
+             'status'   => (int) $validated['status'],
+         ]);
+     
+         return redirect('/courses')->with('success', 'Course updated successfully!');
+     }
+     
+     public function distroy($id){
+      $course = Course::findOrFail($id);
+
+      $course->delete();
+
+
+      return  redirect('/courses');
+
+      
+        
      }
 }
