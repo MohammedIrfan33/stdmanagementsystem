@@ -3,19 +3,16 @@
 
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-24">
-  <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Add New Course</h1>
-  <a href="/courses"
-     class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300">
-     <!-- SVG icon -->
-     Back to Course List
-  </a>
-</div>
-
-
+      <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Add New Course</h1>
+      <a href="/courses"
+         class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300">
+         Back to Course List
+      </a>
+    </div>
 
     <!-- Form Card -->
     <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
-      <form  id="courses-add">
+      <form id="courses-add">
         @csrf
         <div class="space-y-6">
 
@@ -25,8 +22,8 @@
             <input value="{{ old('course_name') }}" type="text" name="course_name" id="course_name"
               placeholder="e.g., Flutter Development"
               class="mt-2 block w-full rounded-md border-0 py-2 pl-4 shadow-sm ring-1 ring-inset 
-                {{ $errors->has('course_name') ? 'ring-red-500' : 'ring-gray-300' }} 
-                placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+              {{ $errors->has('course_name') ? 'ring-red-500' : 'ring-gray-300' }} 
+              placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
               aria-invalid="{{ $errors->has('course_name') ? 'true' : 'false' }}">
             @error('course_name')
               <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -38,8 +35,8 @@
             <label for="duration" class="block text-sm font-medium leading-6 text-gray-900">Duration</label>
             <input value="{{ old('duration') }}" type="text" name="duration" id="duration" placeholder="e.g., 3 Months"
               class="mt-2 block w-full rounded-md border-0 py-2 pl-4 shadow-sm ring-1 ring-inset 
-                {{ $errors->has('duration') ? 'ring-red-500' : 'ring-gray-300' }} 
-                placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+              {{ $errors->has('duration') ? 'ring-red-500' : 'ring-gray-300' }} 
+              placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
               aria-invalid="{{ $errors->has('duration') ? 'true' : 'false' }}">
             @error('duration')
               <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -71,20 +68,19 @@
         {{ $errors->has('status') ? 'ring-red-500' : 'ring-gray-300' }}
         focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
               aria-invalid="{{ $errors->has('status') ? 'true' : 'false' }}">
-              <option value="1" {{ old('status', $course['status'] ?? 1) == 1 ? 'selected' : '' }}>Active</option>
-              <option value="0" {{ old('status', $course['status'] ?? 1) == 0 ? 'selected' : '' }}>Inactive</option>
+              <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>Active</option>
+              <option value="0" {{ old('status', 1) == 0 ? 'selected' : '' }}>Inactive</option>
             </select>
             @error('status')
               <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
           </div>
 
-
         </div>
 
         <!-- Action Buttons -->
         <div class="mt-8 pt-6 border-t border-gray-200 flex items-center justify-end gap-x-6">
-          <button type="button" onclick="window.location='/courses'"
+          <button type="button" onclick="window.location.replace('/courses')"
             class="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700">Cancel</button>
           <button type="submit"
             class="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
@@ -95,20 +91,19 @@
     </div>
   </div>
 
-
+ 
   <script>
 $(function(){
-  // Set CSRF token for all ajax
+  
   $.ajaxSetup({
     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
   });
 
-  // Handle form submit
   $('#courses-add').on('submit', function(e){
     e.preventDefault();
 
     $.ajax({
-      url: "{{ route('course-add') }}",   // your route name
+      url: "{{ route('course-add') }}",
       type: "POST",
       data: $(this).serialize(),
       success: function(res){
@@ -116,17 +111,26 @@ $(function(){
           icon: 'success',
           title: 'Success',
           text: res.message
+        }).then(() => {
+
+          $('#courses-add')[0].reset();
+
+
+        
+
+
+
+
         });
-        $('#courses-add')[0].reset();
       },
       error: function(xhr){
-        if(xhr.status === 422){ // validation error
+        if(xhr.status === 422){
           let errors = xhr.responseJSON.errors;
           let html = '<ul style="text-align:left">';
           $.each(errors, function(k,v){ html += `<li>${v[0]}</li>`; });
           html += '</ul>';
           Swal.fire({ icon:'error', title:'Validation Error', html: html });
-        }else{
+        } else {
           Swal.fire('Error', 'Something went wrong', 'error');
         }
       }

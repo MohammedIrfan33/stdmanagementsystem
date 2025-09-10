@@ -12,7 +12,8 @@ class CourseController extends Controller
 
       $courses =  Course::latest()->get();
 
-      return view('course.index',['courses'=>$courses]);
+      return view('course.index',['courses'=>$courses])
+      ;
         
      }
 
@@ -47,7 +48,7 @@ class CourseController extends Controller
          ]);
      
       
-         return redirect('/courses')->with('success', 'Course added successfully!');
+        
      }
      
 

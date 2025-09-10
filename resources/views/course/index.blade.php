@@ -66,6 +66,12 @@
 
 
 <script>
+
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted || window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        window.location.reload();
+    }
+});
 $(function(){
   // Setup CSRF for AJAX
   $.ajaxSetup({
