@@ -10,6 +10,8 @@ class Student extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["name","email","phone","joing_date","course_id","joining_date"];
+
 
     protected $casts = [
         'joining_date' => 'date',

@@ -36,6 +36,30 @@ class StudentController extends Controller
     }
 
 
+    public function store(){
+
+       
+
+        Student::create(
+            [
+                'name' => request()->name,
+                'email' =>request()->email,
+                'phone' => request()->phone,
+                'course_id' => request()->course,
+                'joining_date'=> request()->joining_date
+            ]
+
+            );
+
+         
+
+
+
+
+        
+    }
+
+
     public function edit(){
 
         return view('student.update');
@@ -53,9 +77,6 @@ class StudentController extends Controller
     }
 
 
-    public function store(){
-        
-    }
 
 
     public function distroy(){

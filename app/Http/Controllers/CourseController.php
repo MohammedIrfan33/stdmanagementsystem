@@ -97,7 +97,9 @@ class CourseController extends Controller
       $course->delete();
 
 
-      return  redirect('/courses');
+      return   response()->json([
+        'message' => 'Course deleted successfully'
+    ]);
 
       
         

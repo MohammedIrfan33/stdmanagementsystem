@@ -16,7 +16,7 @@
     </div>
 
     <div class="bg-white p-6 sm:p-12 rounded-2xl shadow-xl border border-gray-100">
-      <form action="/students" method="POST" x-data="studentForm()" x-ref="studentForm">
+      <form action='/student' method="POST" x-data="studentForm()" x-ref="studentForm">
         @csrf
 
         <!-- Personal Information Section -->
@@ -172,12 +172,12 @@
                 </div>
               </div>
               <div class="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse">
-                <button @click="$refs.studentForm.submit()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent 
+                <button value="submit" @click="$refs.studentForm.submit()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent 
                           shadow-sm px-6 py-2.5 bg-gray-800 text-base font-medium text-white 
                           hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 sm:ml-3 sm:w-auto sm:text-base">
                   Confirm and Save
                 </button>
-                <button @click="showConfirmationModal = false" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 
+                <button  value="submit" @click="showConfirmationModal = false" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 
                           shadow-sm px-6 py-2.5 bg-white text-base font-medium text-gray-700 
                           hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 sm:mt-0 sm:w-auto sm:text-base">
                   Cancel

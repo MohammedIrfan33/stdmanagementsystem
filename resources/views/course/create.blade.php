@@ -15,7 +15,7 @@
 
     <!-- Form Card -->
     <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
-      <form action="/courses" method="POST">
+      <form  id="courses-add">
         @csrf
         <div class="space-y-6">
 
@@ -94,4 +94,45 @@
       </form>
     </div>
   </div>
+
+
+  <script>
+$(function(){
+  // Set CSRF token for all ajax
+  $.ajaxSetup({
+    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+  });
+
+  // Handle form submit
+  $('#courses-add').on('submit', function(e){
+    e.preventDefault();
+
+    $.ajax({
+      url: "{{ route('course-add') }}",   // your route name
+      type: "POST",
+      data: $(this).serialize(),
+      success: function(res){
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: res.message
+        });
+        $('#courses-add')[0].reset();
+      },
+      error: function(xhr){
+        if(xhr.status === 422){ // validation error
+          let errors = xhr.responseJSON.errors;
+          let html = '<ul style="text-align:left">';
+          $.each(errors, function(k,v){ html += `<li>${v[0]}</li>`; });
+          html += '</ul>';
+          Swal.fire({ icon:'error', title:'Validation Error', html: html });
+        }else{
+          Swal.fire('Error', 'Something went wrong', 'error');
+        }
+      }
+    });
+  });
+});
+</script>
+
 </x-layout>

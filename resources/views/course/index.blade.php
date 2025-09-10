@@ -18,7 +18,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
     @forelse ($courses as $course)
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform transform hover:-translate-y-1">
+        <div  id="course-card-{{ $course->id }}" class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform transform hover:-translate-y-1">
             <div class="p-8 ">
                 <div class="flex justify-between items-start">
                     <h3 class="text-xl font-bold text-gray-800 pr-4">{{ $course['name'] }}</h3>
@@ -43,16 +43,14 @@
             </div>
             <div class="bg-gray-50 px-6 py-4 flex justify-end space-x-3 pb-7">
                 <a href="{{ route('edit-course',['id'=>$course['id']]) }}"
-                   class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                   class=" inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
                     Edit
                 </a>
-                <form action="{{ route('delete-course',['id'=>$course['id']]) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700">
+                   
+                    <button  id="course-delete-btn" data-id="{{ $course['id'] }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700" >
                         Delete
                     </button>
-                </form>
+                
             </div>
         </div>
 
@@ -64,6 +62,57 @@
     @endforelse
 
 </div>
+
+
+
+<script>
+$(function(){
+  // Setup CSRF for AJAX
+  $.ajaxSetup({
+    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+  });
+
+ 
+  $(document).on('click', '#course-delete-btn', function(){
+    const id = $(this).data('id');
+    
+    
+    console.log(id);
+    
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Delete user"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if(result.isConfirmed){
+      
+        const deleteUrl = "{{ route('delete-course', ['id' => 'USER_ID']) }}".replace('USER_ID', id);
+
+        $.ajax({
+          url: deleteUrl,
+          type: 'DELETE',
+          success: function(res){
+            Swal.fire('Deleted!', res.message, 'success');
+
+            location.reload();
+
+            
+            
+          },
+          error: function(){
+          
+            Swal.fire('Error', 'Could not delete', 'error');
+          }
+        });
+      }
+    });
+  });
+});
+</script>
+
 
 
 
