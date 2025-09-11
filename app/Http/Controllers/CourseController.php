@@ -76,6 +76,7 @@ class CourseController extends Controller
 
 
          $course = Course::find($id);
+         
      
          if (!$course) {
              return redirect('/courses')->with('error', 'Course not found!');

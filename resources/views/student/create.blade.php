@@ -208,13 +208,13 @@
           if (!this.selectedCourse || !this.joiningDate) return null;
           let start = new Date(this.joiningDate);
 
-          // Assume duration stored in months
+          
           let durationMonths = parseInt(this.selectedCourse.duration) || 0;
           
-          // Use UTC to avoid timezone issues when calculating month
+         
           let end = new Date(Date.UTC(start.getFullYear(), start.getMonth() + durationMonths, start.getDate()));
 
-          // Format to YYYY-MM-DD
+     
           return end.toISOString().split("T")[0];
         }
       }

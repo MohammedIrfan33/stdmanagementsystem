@@ -101,9 +101,18 @@ $(function(){
           url: deleteUrl,
           type: 'DELETE',
           success: function(res){
-            Swal.fire('Deleted!', res.message, 'success');
+            Swal.fire('Deleted!', res.message, 'success').then(() => {
+                   if(result.isConfirmed){
+                     location.reload();
 
-            location.reload();
+
+                   }
+            });
+
+
+            
+
+           
 
             
             
