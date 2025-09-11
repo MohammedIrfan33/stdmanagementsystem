@@ -36,13 +36,13 @@ class StudentController extends Controller
     }
 
 
-    public function store(){
+    public function store(Request $request){
 
 
         $validated = $request->validate([
             'name'         => 'required|string|max:255',
             'email'        => 'required|email|unique:students,email',
-            'phone'        => 'required|string|max:20',
+            'phone'        => 'required|string|max:20|unique:students,phone',
             'course'       => 'required|exists:courses,id',
             'joining_date' => 'required|date',
         ]);
@@ -57,6 +57,9 @@ class StudentController extends Controller
             'course_id'    => $validated['course'],
             'joining_date' => $validated['joining_date'],
         ]);
+
+
+        
 
 
        return redirect()->route('home');
