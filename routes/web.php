@@ -12,7 +12,7 @@ Route::get('/', [StudentController::class, 'index'])->name('home');
 Route::get('student/create', [StudentController::class, 'create'])->name('add-student');
 Route::post('student', [StudentController::class, 'store'])->name('store');
 Route::get('student/edit', [StudentController::class, 'edit'])->name('edit');
-Route::delete('student/${id}/delete', [StudentController::class, 'delete'])->name('delete');
+Route::delete('student/{id}/delete', [StudentController::class, 'distroy'])->name('delete');
 
 Route::get('about', function () {
     return view('about');

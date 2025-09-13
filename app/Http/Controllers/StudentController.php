@@ -92,7 +92,17 @@ class StudentController extends Controller
 
 
 
-    public function distroy(){
+    public function distroy($id){
+
+        $student = Student::findOrFail($id);
+
+        $student->delete();
+
+        return   response()->json([
+            'message' => 'Course deleted successfully'
+        ]);
+
+
        
      }
 
