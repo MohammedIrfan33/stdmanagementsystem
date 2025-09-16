@@ -31,7 +31,7 @@
               <label for="name" class="block text-sm font-medium text-gray-900">Full Name</label>
               <div class="mt-2">
                 <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="E.g., John Doe"
-                  class="block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
+                  class="pl-3 block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
                   focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('name') border-red-500 @enderror">
               </div>
               @error('name')
@@ -44,7 +44,7 @@
               <label for="email" class="block text-sm font-medium text-gray-900">Email Address</label>
               <div class="mt-2">
                 <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="E.g., john@example.com"
-                  class="block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
+                  class="pl-3 block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
                   focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('email') border-red-500 @enderror">
               </div>
               @error('email')
@@ -57,7 +57,7 @@
               <label for="phone" class="block text-sm font-medium text-gray-900">Phone Number</label>
               <div class="mt-2">
                 <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" placeholder="E.g., +1 555-123-4567"
-                  class="block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
+                  class="pl-3 block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
                   focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('phone') border-red-500 @enderror">
               </div>
               @error('phone')
@@ -80,7 +80,7 @@
               <label for="course" class="block text-sm font-medium text-gray-900">Select Course</label>
               <div class="mt-2">
                 <select id="course" name="course" x-model="selectedCourseId"
-                  class="block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
+                  class=" pl-3 block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
                   focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('course') border-red-500 @enderror">
                   <option value="">-- Pick a Course --</option>
                   @foreach ($courses as $course)
@@ -100,7 +100,7 @@
               <label for="joining_date" class="block text-sm font-medium text-gray-900">Joining Date</label>
               <div class="mt-2">
                 <input type="date" name="joining_date" id="joining_date" x-model="joiningDate" value="{{ old('joining_date') }}"
-                  class="block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
+                  class="pl-3 block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
                   focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('joining_date') border-red-500 @enderror">
               </div>
               @error('joining_date')
@@ -111,25 +111,37 @@
           </div>
 
           <!-- Course Summary -->
-          <div x-show="selectedCourse" x-transition class="mt-12 sm:col-span-6">
-            <div class="bg-gray-50 rounded-lg shadow-inner p-8 border border-gray-200">
-              <h3 class="text-xl font-semibold text-gray-800 mb-6" x-text="selectedCourse.name"></h3>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
-                  <span class="text-sm text-gray-500 mb-2">Course Fee</span>
-                  <span class="text-2xl font-bold text-gray-800">₹<span x-text="selectedCourse.fees"></span></span>
-                </div>
-                <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
-                  <span class="text-sm text-gray-500 mb-2">Duration</span>
-                  <span class="text-2xl font-bold text-gray-800"><span x-text="selectedCourse.duration"></span> Months</span>
-                </div>
-                <div x-show="endDate" class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
-                  <span class="text-sm text-gray-500 mb-2">Estimated End Date</span>
-                  <span class="text-2xl font-bold text-gray-800" x-text="endDate"></span>
-                </div>
-              </div>
-            </div>
-          </div>
+<div x-show="selectedCourse" x-transition class="mt-12 sm:col-span-6">
+  <div class="bg-gray-50 rounded-lg shadow-inner p-8 border border-gray-200">
+    <h3 class="text-xl font-semibold text-gray-800 mb-6" x-text="selectedCourse.name"></h3>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
+        <span class="text-sm text-gray-500 mb-2">Course Fee</span>
+        <span class="text-2xl font-bold text-gray-800">₹<span x-text="selectedCourse.fees"></span></span>
+      </div>
+      <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
+        <span class="text-sm text-gray-500 mb-2">Duration</span>
+        <span class="text-2xl font-bold text-gray-800"><span x-text="selectedCourse.duration"></span> Months</span>
+      </div>
+      <div x-show="endDate" class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
+        <span class="text-sm text-gray-500 mb-2">Estimated End Date</span>
+        <span class="text-2xl font-bold text-gray-800" x-text="endDate"></span>
+      </div>
+    </div>
+
+    <!-- Initial Fees Input -->
+    <div class="mt-8">
+      <label for="initial_fees" class="block text-sm font-medium text-gray-900">Initial Fees</label>
+      <input type="number" name="initial_fees" id="initial_fees" placeholder="Enter Initial Fees"
+        class="pl-3  mt-2 block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
+        focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('initial_fees') border-red-500 @enderror">
+      @error('initial_fees')
+        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+      @enderror
+    </div>
+  </div>
+</div>
+
 
         </section>
 
