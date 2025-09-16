@@ -73,9 +73,17 @@ class StudentController extends Controller
     }
 
 
-    public function edit(){
+    public function edit($id){
 
-        return view('student.update');
+       
+
+         $student = Student::findOrFail($id);
+
+          
+
+         $couses = Course::all();
+
+        return view('student.update',['student' => $student, 'courses' => Course::all()] );
 
     }
 
@@ -85,7 +93,22 @@ class StudentController extends Controller
 
 
 
-    public function update(){
+    public function update($id){
+
+        dd($id);
+
+        $student = Student::findOrFail($id);
+
+        $student->name = request('name');
+        $student->email = request('email');
+        $student->phone = request('phone');
+        $student->course_id = request('course');
+        $student->joining_date = request('joining_date');
+
+        $student->save();
+
+        return redirect()->route('home');
+
 
     }
 

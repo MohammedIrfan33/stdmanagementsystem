@@ -15,7 +15,11 @@
 
     <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
       <!-- In a real app, the action would be something like `/students/1` and the method would be `POST` with a hidden `_method` field for `PUT` or `PATCH`. -->
-      <form action="/students/1" method="POST" x-data="studentForm()" x-ref="studentForm">
+      <form action="route({{ 'update' , ['id'=>$student->id] }})" method="POST" x-data="studentForm()" x-ref="studentForm">
+
+      @csrf
+      @method('PUT')
+      
         <!-- Personal Information Section -->
         <div class="border-b border-gray-900/10 pb-12">
           <h2 class="text-xl font-semibold leading-7 text-gray-900">Personal Information</h2>
@@ -25,21 +29,21 @@
             <div class="sm:col-span-3">
               <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Full Name</label>
               <div class="mt-2">
-                <input type="text" name="name" id="name" autocomplete="name" x-model="studentData.name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                <input type="text" name="name" id="name" autocomplete="name"  value = "{{ $student->name }}"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
               </div>
             </div>
 
             <div class="sm:col-span-3">
               <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email Address</label>
               <div class="mt-2">
-                <input id="email" name="email" type="email" autocomplete="email" x-model="studentData.email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                <input id="email" name="email" type="email" autocomplete="email"  value = "{{ $student->email }}", class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
               </div>
             </div>
 
             <div class="sm:col-span-3">
               <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Phone Number</label>
               <div class="mt-2">
-                <input type="tel" name="phone" id="phone" autocomplete="tel" x-model="studentData.phone" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                <input type="tel" name="phone" id="phone" autocomplete="tel"  value ="{{$student->phone}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
               </div>
             </div>
           </div>
@@ -54,19 +58,27 @@
             <div class="sm:col-span-3">
               <label for="course" class="block text-sm font-medium leading-6 text-gray-900">Course</label>
               <div class="mt-2">
-                <select id="course" name="course" x-model="selectedCourseId" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                  <option value="">Select a Course</option>
-                  <template x-for="course in courses" :key="course.id">
-                    <option :value="course.id" x-text="course.name"></option>
-                  </template>
+                 <select id="course" name="course" x-model="selectedCourseId"
+                  class="block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
+                  focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('course') border-red-500 @enderror">
+                  
+                  @foreach ($courses as $course)
+                    <option value="{{ $course->id }}" {{ $student->course->id == $course->id ? 'selected' : '' }}>
+                      {{ $course->name }}
+                    </option>
+                  @endforeach
                 </select>
               </div>
             </div>
             
             <div class="sm:col-span-3">
+
+           
               <label for="joining_date" class="block text-sm font-medium leading-6 text-gray-900">Joining Date</label>
+
+
               <div class="mt-2">
-                <input type="date" name="joining_date" id="joining_date" x-model="joiningDate" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                <input type="date" name="joining_date"  value="{{ \Carbon\Carbon::parse($student->joining_date)->format('Y-m-d') }}"  id="joining_date" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
               </div>
             </div>
 
@@ -126,7 +138,7 @@
                         </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button @click="$refs.studentForm.submit()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                        <button  type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                             Confirm and Update
                         </button>
                         <button @click="showConfirmationModal = false" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm">
@@ -141,56 +153,5 @@
     </div>
   </div>
 
-  <script>
-    function studentForm() {
-      // In a real application, this data would be fetched from your database for the specific student.
-      const existingStudentData = {
-          name: 'Irfan A P',
-          email: 'irfan@example.com',
-          phone: '+91 9876543210',
-          courseId: 1, // Pre-selects 'Flutter Development'
-          joiningDate: '2024-06-01'
-      };
 
-      return {
-        studentData: existingStudentData,
-        courses: [
-          { id: 1, name: 'Flutter Development', fee: '₹15,000', duration: '3 Months' },
-          { id: 2, name: 'React Development', fee: '₹20,000', duration: '4 Months' },
-          { id: 3, name: 'Full Stack Development', fee: '₹35,000', duration: '6 Months' },
-          { id: 4, name: 'Data Science', fee: '₹40,000', duration: '6 Months' },
-          { id: 5, name: 'UI/UX Design', fee: '₹12,000', duration: '2 Months' }
-        ],
-        selectedCourseId: existingStudentData.courseId,
-        joiningDate: existingStudentData.joiningDate,
-        showConfirmationModal: false,
-        get selectedCourse() {
-          if (!this.selectedCourseId) return null;
-          return this.courses.find(course => course.id == this.selectedCourseId);
-        },
-        get endDate() {
-          if (!this.selectedCourse || !this.joiningDate) {
-            return '';
-          }
-          
-          const startDate = new Date(this.joiningDate);
-          const [value, unit] = this.selectedCourse.duration.split(' ');
-          const durationValue = parseInt(value, 10);
-          
-          if (unit.toLowerCase().startsWith('month')) {
-            startDate.setMonth(startDate.getMonth() + durationValue);
-          } else if (unit.toLowerCase().startsWith('day')) {
-            startDate.setDate(startDate.getDate() + durationValue);
-          }
-
-          const joiningDay = new Date(this.joiningDate).getDate();
-          if (startDate.getDate() != joiningDay) {
-            startDate.setDate(0);
-          }
-          
-          return startDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-        }
-      }
-    }
-  </script>
 </x-layout>

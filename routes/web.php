@@ -11,7 +11,8 @@ Route::get('/', [StudentController::class, 'index'])->name('home');
 
 Route::get('student/create', [StudentController::class, 'create'])->name('add-student');
 Route::post('student', [StudentController::class, 'store'])->name('store');
-Route::get('student/edit', [StudentController::class, 'edit'])->name('edit');
+Route::get('student/edit/${id}', [StudentController::class, 'edit'])->name('edit');
+Route::put('student/update/${id}', [StudentController::class, 'edit'])->name('update');
 Route::delete('student/{id}/delete', [StudentController::class, 'distroy'])->name('delete');
 
 Route::get('about', function () {
