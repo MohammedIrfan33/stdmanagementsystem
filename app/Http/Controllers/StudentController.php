@@ -93,24 +93,30 @@ class StudentController extends Controller
 
 
 
-    public function update($id){
+   public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'name'         => 'required|string|max:255',
+        'email'        => 'required|email|unique:students,email,' . $id,
+        'phone'        => 'required|string|max:20|unique:students,phone,' . $id,
+        'course'       => 'required|exists:courses,id',
+        'joining_date' => 'required|date',
+    ]);
 
-        dd($id);
+    $student = Student::findOrFail($id);
 
-        $student = Student::findOrFail($id);
+    $student->update([
+        'name'         => $validated['name'],
+        'email'        => $validated['email'],
+        'phone'        => $validated['phone'],
+        'course_id'    => $validated['course'],
+        'joining_date' => $validated['joining_date'],
+    ]);
 
-        $student->name = request('name');
-        $student->email = request('email');
-        $student->phone = request('phone');
-        $student->course_id = request('course');
-        $student->joining_date = request('joining_date');
+    return redirect()->route('student.index')
+                     ->with('success', 'Student updated successfully.');
+}
 
-        $student->save();
-
-        return redirect()->route('home');
-
-
-    }
 
 
 

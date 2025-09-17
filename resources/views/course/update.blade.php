@@ -24,7 +24,7 @@
 
       <!-- Form Card -->
       <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
-        <form action="{{ route('update-course', ['id' => $course['id']]) }}" method="POST">
+        <form action="{{route('update-course', ['id' => $course['id'])}}" method="POST">
           @csrf
           @method('PATCH')
 
