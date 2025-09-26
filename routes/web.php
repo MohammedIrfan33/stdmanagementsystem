@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\FeesController;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,6 @@ Route::post('courses', [CourseController::class, 'store'])->name('course-add');
 Route::get('courses/edit/{id}', [CourseController::class, 'edit'])->name('edit-course');
 Route::patch('courses/update/{id}', [CourseController::class, 'update'])->name('update-course');
 Route::delete('courses/delete/{id}', [CourseController::class, 'distroy'])->name('delete-course');
+
+
+Route::get('payements',[FeesController::class , 'index'])->name('payments');
