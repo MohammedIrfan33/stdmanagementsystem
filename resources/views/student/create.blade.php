@@ -25,7 +25,6 @@
           <p class="mt-2 text-base text-gray-600">Provide the student's essential personal details.</p>
 
           <div class="mt-8 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-6">
-
             <!-- Name -->
             <div class="sm:col-span-3">
               <label for="name" class="block text-sm font-medium text-gray-900">Full Name</label>
@@ -74,7 +73,6 @@
           <p class="mt-2 text-base text-gray-600">Select the desired course and specify the enrollment date.</p>
 
           <div class="mt-8 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-6">
-
             <!-- Course -->
             <div class="sm:col-span-3">
               <label for="course" class="block text-sm font-medium text-gray-900">Select Course</label>
@@ -111,37 +109,36 @@
           </div>
 
           <!-- Course Summary -->
-<div x-show="selectedCourse" x-transition class="mt-12 sm:col-span-6">
-  <div class="bg-gray-50 rounded-lg shadow-inner p-8 border border-gray-200">
-    <h3 class="text-xl font-semibold text-gray-800 mb-6" x-text="selectedCourse.name"></h3>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
-      <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
-        <span class="text-sm text-gray-500 mb-2">Course Fee</span>
-        <span class="text-2xl font-bold text-gray-800">₹<span x-text="selectedCourse.fees"></span></span>
-      </div>
-      <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
-        <span class="text-sm text-gray-500 mb-2">Duration</span>
-        <span class="text-2xl font-bold text-gray-800"><span x-text="selectedCourse.duration"></span> Months</span>
-      </div>
-      <div x-show="endDate" class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
-        <span class="text-sm text-gray-500 mb-2">Estimated End Date</span>
-        <span class="text-2xl font-bold text-gray-800" x-text="endDate"></span>
-      </div>
-    </div>
+          <div x-show="selectedCourse" x-transition class="mt-12 sm:col-span-6">
+            <div class="bg-gray-50 rounded-lg shadow-inner p-8 border border-gray-200">
+              <h3 class="text-xl font-semibold text-gray-800 mb-6" x-text="selectedCourse.name"></h3>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
+                  <span class="text-sm text-gray-500 mb-2">Course Fee</span>
+                  <span class="text-2xl font-bold text-gray-800">₹<span x-text="selectedCourse.fees"></span></span>
+                </div>
+                <div class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
+                  <span class="text-sm text-gray-500 mb-2">Duration</span>
+                  <span class="text-2xl font-bold text-gray-800"><span x-text="selectedCourse.duration"></span> Months</span>
+                </div>
+                <div x-show="endDate" class="flex flex-col items-center justify-center p-5 bg-white rounded-lg shadow-sm border">
+                  <span class="text-sm text-gray-500 mb-2">Estimated End Date</span>
+                  <span class="text-2xl font-bold text-gray-800" x-text="endDate"></span>
+                </div>
+              </div>
 
-    <!-- Initial Fees Input -->
-    <div class="mt-8">
-      <label for="initial_fees" class="block text-sm font-medium text-gray-900">Initial Fees</label>
-      <input type="number" name="initial_fees" id="initial_fees" placeholder="Enter Initial Fees"
-        class="pl-3  mt-2 block w-full rounded-md border border-gray-300 py-2.5 text-gray-900 shadow-sm
-        focus:border-gray-500 focus:ring-gray-500 sm:text-sm @error('initial_fees') border-red-500 @enderror">
-      @error('initial_fees')
-        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-      @enderror
-    </div>
-  </div>
+              <!-- Add Payment Button -->
+               <div class="mt-6 flex justify-end w-full">
+  <button type="button"
+    @click="window.location.href = `/payements`"
+    class="rounded-md bg-gray-800 px-6 py-2.5 text-base font-semibold text-white shadow-sm focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-green-700">
+    Add Payment
+  </button>
 </div>
 
+              
+            </div>
+          </div>
 
         </section>
 

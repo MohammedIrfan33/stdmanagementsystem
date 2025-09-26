@@ -53,7 +53,7 @@
     <div class="w-full px-4 sm:px-8 mt-10">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Payment Management</h1>
-            <a href="#"
+            <a href="{{ route('add-payment') }}"
                class="inline-flex items-center bg-blue-600 text-white px-5 py-2.5 rounded-lg card-shadow hover:bg-blue-700 transition-colors duration-300 text-base">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
