@@ -50,6 +50,25 @@
         }
     </style>
 
+    @if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Payment Successful!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#000000ff',
+                confirmButtonText: 'OK',
+                timer: 3000,
+                timerProgressBar: true,
+                toast: false,
+                position: 'center'
+            });
+        });
+    </script>
+@endif
+
+
     <div class="w-full px-4 sm:px-8 mt-10">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Payment Management</h1>
@@ -156,26 +175,34 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        <tr class="hover:bg-gray-50 transition-colors duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500 align-middle">101</td>
+
+
+                    @forelse ($fees as $fee)
+
+
+
+                    
+
+                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500 align-middle">{{ $fee->id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <p class="text-sm font-semibold text-gray-800">John Doe</p>
-                                <p class="text-xs text-gray-500 mt-1">john.doe@example.com</p>
+                                <p class="text-sm font-semibold text-gray-800">{{ $fee->student->name }}</p>
+                                <p class="text-xs text-gray-500 mt-1">{{ $fee->student->email }}</p>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">
-                                Web Development
+                                {{ $fee->student->course->name }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800 align-middle">
-                                ₹12,500
+                                ₹{{ $fee->amount }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">15 Aug 2023</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $fee->payment_date_formatted}}</td>
                             <td class="px-6 py-4 whitespace-nowrap align-middle">
                                 <span class="payment-mode-badge">
-                                    <i class="fas fa-building mr-1"></i> Bank Transfer
+                                    <i class="fas fa-building mr-1"></i>{{ $fee->payment_mode}}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-600 align-middle">
-                                Second installment for web development course
+                                {{ $fee->note ?? ' __' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
                                 <div class="flex items-center justify-end space-x-4">
@@ -193,158 +220,34 @@
                                 </div>
                             </td>
                         </tr>
+
+                    @empty
+
+                     <tr>
+        <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+          No payments  found.
+        </td>
+      </tr>
+
+                     
+
+
+
+                    @endforelse
+
+                    
                         
-                        <tr class="bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500 align-middle">102</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <p class="text-sm font-semibold text-gray-800">Jane Smith</p>
-                                <p class="text-xs text-gray-500 mt-1">jane.smith@example.com</p>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">
-                                Data Science
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800 align-middle">
-                                ₹8,000
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">12 Aug 2023</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <span class="payment-mode-badge">
-                                    <i class="fas fa-money-bill-wave mr-1"></i> Cash
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 align-middle">
-                                First installment
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
-                                <div class="flex items-center justify-end space-x-4">
-                                    <a href="#">
-                                        <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200 flex items-center">
-                                            <i class="fas fa-edit mr-1"></i>
-                                            Edit
-                                        </button>
-                                    </a>
-                                    
-                                    <button class="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
-                                        <i class="fas fa-trash mr-1"></i>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
                         
-                        <tr class="hover:bg-gray-50 transition-colors duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500 align-middle">103</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <p class="text-sm font-semibold text-gray-800">Robert Johnson</p>
-                                <p class="text-xs text-gray-500 mt-1">robert@example.com</p>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">
-                                Digital Marketing
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800 align-middle">
-                                ₹10,000
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">10 Aug 2023</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <span class="payment-mode-badge">
-                                    <i class="fas fa-mobile-alt mr-1"></i> UPI
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 align-middle">
-                                Full course payment with 10% discount
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
-                                <div class="flex items-center justify-end space-x-4">
-                                    <a href="#">
-                                        <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200 flex items-center">
-                                            <i class="fas fa-edit mr-1"></i>
-                                            Edit
-                                        </button>
-                                    </a>
-                                    
-                                    <button class="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
-                                        <i class="fas fa-trash mr-1"></i>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                       
                         
-                        <tr class="bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500 align-middle">104</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <p class="text-sm font-semibold text-gray-800">Sarah Williams</p>
-                                <p class="text-xs text-gray-500 mt-1">sarah@example.com</p>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">
-                                Graphic Design
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800 align-middle">
-                                ₹6,500
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">08 Aug 2023</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <span class="payment-mode-badge">
-                                    <i class="fas fa-credit-card mr-1"></i> Card
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 align-middle">
-                                -- 
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
-                                <div class="flex items-center justify-end space-x-4">
-                                    <a href="#">
-                                        <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200 flex items-center">
-                                            <i class="fas fa-edit mr-1"></i>
-                                            Edit
-                                        </button>
-                                    </a>
-                                    
-                                    <button class="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
-                                        <i class="fas fa-trash mr-1"></i>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
                         
-                        <tr class="hover:bg-gray-50 transition-colors duration-200">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500 align-middle">105</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <p class="text-sm font-semibold text-gray-800">Michael Brown</p>
-                                <p class="text-xs text-gray-500 mt-1">michael@example.com</p>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">
-                                Python Programming
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800 align-middle">
-                                ₹9,000
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">05 Aug 2023</td>
-                            <td class="px-6 py-4 whitespace-nowrap align-middle">
-                                <span class="payment-mode-badge">
-                                    <i class="fas fa-building mr-1"></i> Bank Transfer
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-sm text-gray-600 align-middle">
-                                Third installment, late fee included
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
-                                <div class="flex items-center justify-end space-x-4">
-                                    <a href="#">
-                                        <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200 flex items-center">
-                                            <i class="fas fa-edit mr-1"></i>
-                                            Edit
-                                        </button>
-                                    </a>
-                                    
-                                    <button class="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
-                                        <i class="fas fa-trash mr-1"></i>
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        
+                        
+                        
+                      
+                   
+                   
+                   
                     </tbody>
                 </table>
             </div>
