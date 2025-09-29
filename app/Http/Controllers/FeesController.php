@@ -11,10 +11,14 @@ use App\Models\Fee;
 
 class FeesController extends Controller
 {
-   public function index()
+   public function index(Request $request)
    {
 
-      $fees = Fee::latest()->get();
+      $fees = Fee::latest()->paginate(10);
+
+       if ($request->ajax()) {
+        return view('fees.partials.fees_table', compact('fees'))->render();
+      }
 
 
       return view('payment.index',['fees' => $fees]);

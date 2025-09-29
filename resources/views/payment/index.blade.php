@@ -1,5 +1,4 @@
 <x-layout title="Payments">
-<body class="bg-gray-100">
 <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -213,7 +212,7 @@
                                         </button>
                                     </a>
                                     
-                                    <button id="py-btn-del" data-id="{{ $fee->id }}" class="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
+                                    <button data-id="{{ $fee->id }}" class=" delete-fee text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
                                         <i class="fas fa-trash mr-1"></i>
                                         Delete
                                     </button>
@@ -228,6 +227,8 @@
           No payments  found.
         </td>
       </tr>
+
+      
 
                      
 
@@ -250,69 +251,119 @@
                    
                     </tbody>
                 </table>
+
+
+
             </div>
+
+
+            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-end rounded-b-lg">
+        {{ $fees->links() }}
+    </div>
+
+
+      
             
-            <!-- Pagination -->
-            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between rounded-b-lg">
-                <div class="text-sm text-gray-700">
-                    Showing <span class="font-semibold">1</span> to <span class="font-semibold">5</span> of <span class="font-semibold">24</span> results
-                </div>
-                <div class="flex space-x-2">
-                    <a href="#" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 text-sm card-shadow flex items-center">Previous</a>
-                    <a href="#" class="px-3 py-1 rounded-md bg-blue-600 text-white text-sm card-shadow flex items-center font-medium">1</a>
-                    <a href="#" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 text-sm card-shadow flex items-center">2</a>
-                    <a href="#" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 text-sm card-shadow flex items-center">3</a>
-                    <a href="#" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 text-sm card-shadow flex items-center">Next</a>
-                </div>
-            </div>
+           
         </div>
     </div>
 
 
-      <script>
-        $(function () {
-            // Setup CSRF for AJAX
-            $.ajaxSetup({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-            });
+     
+<script>
+$(document).ready(function() {
+    // AJAX pagination
+    $(document).on('click', '.pagination a', function(e){
+        e.preventDefault();
+        let url = $(this).attr('href');
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(res){
+                $('#paymentsTableContainer').html(res);
+            }
+        });
+    });
 
-            $(document).on('click', '#py-btn-del', function () {
-                const id = $(this).data('id');
+    // Delete payment
+    $(document).on('click', '.delete-fee', function() {
+        let id = $(this).data('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Delete this payment?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+         
+            if(result.isConfirmed) {
+                const url = "{{ route('delete-payment', ['id' => 'FEE_ID']) }}".replace('FEE_ID', id);
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function(res){
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'Delete This Fees?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const deleteUrl = "{{ route('delete-payment', ['id' => 'FEE_ID']) }}".replace('FEE_ID', id);
 
 
-                      
+                        Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: res.message,
+            confirmButtonText: 'OK',
+            timer: 2000, // auto-close after 2 sec
+            timerProgressBar: true,
+            toast: false,
+            position: 'center'
+        }).then(() => {
+            window.location.reload(); // reload after SweetAlert closes
+        });
 
-                      
 
+
+
+
+
+
+                        
+
+
+
+
+
+
+                               
+
+
+
+
+
+                       
+                       
                         $.ajax({
-                            url: deleteUrl,
-                            type: 'DELETE',
-                            success: function (res) {
-                                Swal.fire('Deleted!', res.message, 'success').then(() => {
-                                    location.reload();
-                                });
-                            },
-                            error: function () {
-                                Swal.fire('Error', 'Could not delete', 'error');
+                            url: window.location.href,
+                            type: 'GET',
+                            success: function(res){
+                                $('#paymentsTableContainer').html(res);
+
                             }
                         });
+                    },
+                    error: function(){
+                        Swal.fire('Error', 'Could not delete', 'error');
                     }
                 });
-            });
+            }
         });
-    </script>
-</body>
+    });
+
+
+
+});
+</script>
+
+
 
 
 </x-layout>
