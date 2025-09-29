@@ -33,5 +33,7 @@ Route::delete('courses/delete/{id}', [CourseController::class, 'distroy'])->name
 Route::get('payements',[FeesController::class , 'index'])->name('payments');
 Route::get('payements/create',[FeesController::class , 'create'])->name('add-payment');
 Route::post('payements',[FeesController::class , 'store'])->name('store-payments');
+Route::delete('payements/{id}/delete',[FeesController::class , 'destroy'])->name('delete-payment');
+Route::get('payements/edit/{id}',[FeesController::class , 'edit'])->name('edit-payment');
 
 

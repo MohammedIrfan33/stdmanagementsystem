@@ -75,7 +75,7 @@ class FeesController extends Controller
 
       } catch (QueryException $e) {
 
-         dd($e->getMessage());
+
 
 
          return back()->withErrors(['database' => 'Something went wrong while saving the payment. Please try again.'])
@@ -87,4 +87,34 @@ class FeesController extends Controller
 
       }
    }
+
+
+   //for deleting a payment
+  public function destroy($id)
+{
+    $fee = Fee::find($id);
+
+    if (!$fee) {
+        return response()->json(['message' => 'Payment not found'], 404);
+    }
+
+    try {
+        $fee->delete();
+        return response()->json(['message' => 'Payment deleted successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Something went wrong while deleting the payment'], 500);
+    }
+}
+
+//for editing a payment
+public function edit($id)
+{
+    $fee = Fee::find($id);
+    $studentList = Student::all();
+     
+
+    return view('payment.update', ['fee' => $fee,'students' => $studentList]);
+
+
+}
 }

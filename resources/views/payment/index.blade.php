@@ -206,14 +206,14 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium align-middle">
                                 <div class="flex items-center justify-end space-x-4">
-                                    <a href="#">
+                                    <a href="{{ route('edit-payment', ['id' => $fee->id]) }}">
                                         <button class="text-blue-600 hover:text-blue-900 transition-colors duration-200 flex items-center">
                                             <i class="fas fa-edit mr-1"></i>
                                             Edit
                                         </button>
                                     </a>
                                     
-                                    <button class="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
+                                    <button id="py-btn-del" data-id="{{ $fee->id }}" class="text-red-600 hover:text-red-900 transition-colors duration-200 flex items-center">
                                         <i class="fas fa-trash mr-1"></i>
                                         Delete
                                     </button>
@@ -267,5 +267,52 @@
             </div>
         </div>
     </div>
+
+
+      <script>
+        $(function () {
+            // Setup CSRF for AJAX
+            $.ajaxSetup({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+            });
+
+            $(document).on('click', '#py-btn-del', function () {
+                const id = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Delete This Fees?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const deleteUrl = "{{ route('delete-payment', ['id' => 'FEE_ID']) }}".replace('FEE_ID', id);
+
+
+                      
+
+                      
+
+                        $.ajax({
+                            url: deleteUrl,
+                            type: 'DELETE',
+                            success: function (res) {
+                                Swal.fire('Deleted!', res.message, 'success').then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire('Error', 'Could not delete', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
+
+
 </x-layout>
