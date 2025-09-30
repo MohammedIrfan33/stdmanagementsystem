@@ -121,4 +121,51 @@ public function edit($id)
 
 
 }
+
+
+public function update(Request $request, $id)
+{
+
+  
+    $fee = Fee::find($id);
+     
+  
+
+    if (!$fee) {
+        return redirect()->route('payments')->withErrors(['message' => 'Payment not found']);
+    }
+
+    $validatedData = $request->validate(
+        [
+            'student_id' => 'required|exists:students,id',
+            'amount' => 'required|numeric|min:1',
+            'payment_date' => 'required|date',
+            'payment_mode' => 'required|in:Card,UPI,Cash',
+            'note' => 'nullable|string|max:255',
+        ],
+        [
+            'student_id.required' => 'Please select a student or this student does not exist.',
+            'student_id.exists' => 'The selected student does not exist.',
+            'amount.required' => 'Please enter the payment amount.',
+            'amount.numeric' => 'The amount must be a valid number.',
+            'amount.min' => 'The amount must be at least 1.',
+            'payment_date.required' => 'Please enter the payment date.',
+            'payment_date.date' => 'The payment date must be a valid date.',
+            'payment_method.required' => 'Please select a payment method.',
+            'payment_method.in' => 'The selected payment method is invalid. Choose Card, UPI, or Cash.',
+            'note.string' => 'The note must be a valid string.',
+            'note.max' => 'The note may not be greater than 255 characters.',
+        ]
+    );
+
+   
+
+    try {
+        $fee->update($validatedData);
+        return redirect()->route('payments')->with('success', 'Payment updated successfully');
+    } catch (QueryException $e) {
+        return back()->withErrors(['database' => 'Something went wrong while updating the payment. Please try again.'])
+                     ->withInput();
+    }
+   }
 }

@@ -114,7 +114,7 @@
                     cancelButtonText: 'Cancel'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        const deleteUrl = "{{ route('delete', ['id' => 'USER_ID']) }}".replace('USER_ID', id);
+                        const deleteUrl = "{{ route('delete-student', ['id' => 'USER_ID']) }}".replace('USER_ID', id);
 
                         $.ajax({
                             url: deleteUrl,
