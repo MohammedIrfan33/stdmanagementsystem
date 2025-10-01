@@ -16,7 +16,7 @@
     </div>
 
     <div class="bg-white p-6 sm:p-12 rounded-2xl shadow-xl border border-gray-100">
-      <form action="{{ route('store') }}" method="POST" x-data="studentForm()" x-ref="studentForm">
+      <form action="{{ route('store-student') }}" method="POST" x-data="studentForm()" x-ref="studentForm">
         @csrf
 
         <!-- Personal Information Section -->

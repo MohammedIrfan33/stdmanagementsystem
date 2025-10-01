@@ -34,10 +34,10 @@ class Course  extends Model{
 
     return  $current_course;
     }
+
+
+    public function user(){
+        return $this->belongsTo( User::class);
+    }
 }
-
-
-
-
-
 ?>

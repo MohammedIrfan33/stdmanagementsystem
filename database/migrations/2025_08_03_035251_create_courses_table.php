@@ -13,17 +13,22 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table -> string('name');
-            $table -> string('duration');
-            $table -> integer('fees');
-            $table -> boolean('status')->default(true);
+            $table->unsignedBigInteger('user_id'); // Who created/owns the course
+            $table->string('name');
+            $table->string('duration');
+            $table->integer('fees');
+            $table->boolean('status')->default(true);
             $table->timestamps();
+
+            // Foreign key for user
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::dropIfExists('courses');

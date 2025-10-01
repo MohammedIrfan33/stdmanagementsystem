@@ -14,15 +14,21 @@ return new class extends Migration
         Schema::create('fees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('user_id'); // Who collected/added fee
             $table->decimal('amount', 10, 2);
-            $table->date(column: 'payment_date');
+            $table->date('payment_date');
             $table->string('payment_mode')->nullable(); 
             $table->text('note')->nullable();
 
-            // Foreign key
+            // Foreign keys
             $table->foreign('student_id')
                   ->references('id')
                   ->on('students')
+                  ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
                   ->onDelete('cascade');
 
             $table->timestamps();
@@ -34,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Fees');
+        Schema::dropIfExists('fees'); // lowercase is better
     }
 };

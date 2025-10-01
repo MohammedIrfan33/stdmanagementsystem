@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id'); // New column for user
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->unique();
-            $table->date(column: 'joining_date');
+            $table->date('joining_date');
 
             // Foreign key to courses table
             $table->unsignedBigInteger('course_id');
@@ -24,9 +25,15 @@ return new class extends Migration
                   ->references('id')
                   ->on('courses')
                   ->onDelete('cascade');
-            $table->enum('status', ['ongoing', 'completed'])->default('ongoing');
 
+            $table->enum('status', ['ongoing', 'completed'])->default('ongoing');
             $table->timestamps();
+
+            // Foreign key for user
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
     }
 
