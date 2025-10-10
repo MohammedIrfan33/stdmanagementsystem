@@ -5,32 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Scripts -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body class="font-poppins bg-[#F6F7F9]">
 
 <main class="flex flex-col md:flex-row h-screen w-full overflow-hidden">
 
-    <!-- Left image section -->
-    <section class="hidden md:flex flex-1 items-center justify-center bg-[#f5f5f5] border-r border-gray-300">
+    <!-- Left Image Section -->
+    <section class="md:flex flex-1 items-center justify-center bg-[#f5f5f5] border-r border-gray-300 h-screen">
         <img 
             src="{{ asset('images/login_image.png') }}" 
-            alt="User logging into dashboard illustration" 
+            alt="Login illustration" 
             class="w-full h-full object-cover"
-            loading="lazy"
         />
     </section>
 
-    <!-- Right login form section -->
+    <!-- Right Login Form Section -->
     <section class="flex flex-[1.1] items-center justify-center">
         <div class="w-11/12 max-w-lg px-4">
 
@@ -38,7 +42,7 @@
             <h1 class="text-5xl font-semibold text-center text-gray-800 mb-2">Welcome</h1>
             <h2 class="text-xl font-medium text-gray-600 text-center mb-6">Login to access your dashboard</h2>
 
-            <!-- Login form -->
+            <!-- Login Form -->
             <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
 
@@ -51,14 +55,14 @@
                         placeholder="Enter your email"
                         value="{{ old('email') }}"
                         required autofocus
-                        class="w-full px-4 py-4 text-base font-semibold text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+                        class="w-full px-4 py-4 text-base  font-medium text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
                     />
                     @error('email')
                         <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
-            
+                <!-- Password -->
                 <div>
                     <input 
                         id="password" 
@@ -66,7 +70,7 @@
                         name="password" 
                         placeholder="Enter your password"
                         required
-                        class="w-full px-4 py-4 text-base font-semibold text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+                        class="w-full px-4 py-4 text-base font-medium text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
                     />
                     @error('password')
                         <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
@@ -91,6 +95,17 @@
                 <button type="submit" class="w-full py-4 bg-teal-800 text-white text-xl rounded-xl hover:bg-teal-900 transition">
                     Log in
                 </button>
+
+                <!-- Register Link -->
+                @if (Route::has('register'))
+                    <p class="text-center text-gray-600 text-sm mt-4">
+                        Don’t have an account? 
+                        <a href="{{ route('register') }}" class="text-teal-700 font-semibold hover:underline">
+                            Create one
+                        </a>
+                    </p>
+                @endif
+
             </form>
         </div>
     </section>
