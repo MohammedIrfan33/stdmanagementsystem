@@ -41,7 +41,7 @@
             <h1 class="text-5xl font-semibold text-center text-gray-800 mb-2">Create Account</h1>
             <h2 class="text-xl font-medium text-gray-600 text-center mb-6">Register to get started</h2>
 
-            <form method="POST" action="{{ route('register') }}" class="space-y-4">
+            <form method="POST" action="{{ route('register') }}" class="space-y-4" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Name -->
@@ -59,6 +59,22 @@
                         <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <div class="mt-4">
+    <input 
+        id="institutename" 
+        type="text" 
+        name="institutename" 
+        placeholder="Enter your institute name" 
+        value="{{ old('institutename') }}"
+        required
+        class="w-full px-4 py-4 text-base font-medium text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+    />
+    @error('institutename')
+        <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
+    @enderror
+</div>
+
 
                 <!-- Email -->
                 <div>
@@ -106,6 +122,52 @@
                     @enderror
                 </div>
 
+
+
+                
+                <div class="border-2 rounded-lg p-3 hover:border-teal-500 transition duration-200 flex items-center justify-between">
+    <!-- File name display -->
+    <span id="logoFileName" class="text-gray-600 text-sm">No file chosen</span>
+
+    <!-- Hidden input -->
+    <input 
+        id="logo"
+        type="file"
+        name="logo"
+        accept="image/*"
+        required
+        class="hidden"
+        onchange="document.getElementById('logoFileName').textContent = this.files[0]?.name || 'No file chosen';"
+    >
+
+    <!-- Custom button on the right -->
+    <label 
+        for="logo"
+        class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-teal-800 text-white text-sm font-medium rounded-md hover:bg-teal-700 transition"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+        </svg>
+        Upload Logo
+    </label>
+</div>
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <!-- Register Button -->
                 <div class="flex items-center justify-between mt-6">
                  
@@ -114,15 +176,23 @@
                         Register
                     </button>
                 </div>
-
-
             </form>
 
+
+
+
+
+
+
+
+
+
+
             <div class="text-center mt-4">
-    <a href="{{ route('login') }}" class="text-sm text-teal-600 hover:underline">
-        Already have an account?
-    </a>
-</div>
+                <a href="{{ route('login') }}" class="text-sm text-teal-600 hover:underline">
+                    Already have an account?
+                </a>
+            </div>
 
         </div>
     </section>
