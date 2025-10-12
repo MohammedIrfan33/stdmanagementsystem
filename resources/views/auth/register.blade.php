@@ -1,52 +1,202 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+{{-- resources/views/auth/register.blade.php --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- jQuery + SweetAlert (optional for alerts) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="font-poppins bg-[#F6F7F9]">
+
+<main class="flex flex-col md:flex-row h-screen w-full overflow-hidden">
+
+    <!-- Left Image Section -->
+    <section class="md:flex flex-1 items-center justify-center bg-[#f5f5f5] border-r border-gray-300 h-screen">
+        <img 
+            src="{{ asset('images/login_image.png') }}" 
+            alt="Register illustration" 
+            class="w-full h-full object-cover"
+        />
+    </section>
+
+    <!-- Right Form Section -->
+    <section class="flex flex-[1.1] items-center justify-center">
+        <div class="w-11/12 max-w-lg px-4">
+
+            <!-- Heading -->
+            <h1 class="text-5xl font-semibold text-center text-gray-800 mb-2">Create Account</h1>
+            <h2 class="text-xl font-medium text-gray-600 text-center mb-6">Register to get started</h2>
+
+            <form method="POST" action="{{ route('register') }}" class="space-y-4" enctype="multipart/form-data">
+                @csrf
+
+                <!-- Name -->
+                <div>
+                    <input 
+                        id="name" 
+                        type="text" 
+                        name="name" 
+                        placeholder="Enter your name" 
+                        value="{{ old('name') }}"
+                        required autofocus
+                        class="w-full px-4 py-4 text-base  font-medium text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+                    />
+                    @error('name')
+                        <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mt-4">
+    <input 
+        id="institutename" 
+        type="text" 
+        name="institutename" 
+        placeholder="Enter your institute name" 
+        value="{{ old('institutename') }}"
+        required
+        class="w-full px-4 py-4 text-base font-medium text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+    />
+    @error('institutename')
+        <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
+    @enderror
+</div>
+
+
+                <!-- Email -->
+                <div>
+                    <input 
+                        id="email" 
+                        type="email" 
+                        name="email" 
+                        placeholder="Enter your email" 
+                        value="{{ old('email') }}"
+                        required
+                        class="w-full px-4 py-4 text-base font-medium  text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+                    />
+                    @error('email')
+                        <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <input 
+                        id="password" 
+                        type="password" 
+                        name="password" 
+                        placeholder="Enter your password" 
+                        required
+                        class="w-full px-4 py-4 text-base font-medium  text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+                    />
+                    @error('password')
+                        <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <input 
+                        id="password_confirmation" 
+                        type="password" 
+                        name="password_confirmation" 
+                        placeholder="Confirm your password" 
+                        required
+                        class="w-full px-4 py-4 text-base font-medium text-gray-800 border border-gray-300 rounded-xl focus:outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-200"
+                    />
+                    @error('password_confirmation')
+                        <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
+
+
+                
+                <div class="border-2 rounded-lg p-3 hover:border-teal-500 transition duration-200 flex items-center justify-between">
+    <!-- File name display -->
+    <span id="logoFileName" class="text-gray-600 text-sm">No file chosen</span>
+
+    <!-- Hidden input -->
+    <input 
+        id="logo"
+        type="file"
+        name="logo"
+        accept="image/*"
+        required
+        class="hidden"
+        onchange="document.getElementById('logoFileName').textContent = this.files[0]?.name || 'No file chosen';"
+    >
+
+    <!-- Custom button on the right -->
+    <label 
+        for="logo"
+        class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-teal-800 text-white text-sm font-medium rounded-md hover:bg-teal-700 transition"
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+        </svg>
+        Upload Logo
+    </label>
+</div>
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- Register Button -->
+                <div class="flex items-center justify-between mt-6">
+                 
+
+                    <button type="submit" class="w-full bg-teal-800 hover:bg-teal-900 text-white px-6 py-3 rounded-xl text-lg transition">
+                        Register
+                    </button>
+                </div>
+            </form>
+
+
+
+
+
+
+
+
+
+
+
+            <div class="text-center mt-4">
+                <a href="{{ route('login') }}" class="text-sm text-teal-600 hover:underline">
+                    Already have an account?
+                </a>
+            </div>
+
         </div>
+    </section>
+</main>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</body>
+</html>
