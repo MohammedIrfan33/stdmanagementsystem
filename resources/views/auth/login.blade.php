@@ -1,41 +1,5 @@
-{{-- resources/views/auth/login.blade.php --}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Scripts -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-
-<body class="font-poppins bg-[#F6F7F9]">
-
-<main class="flex flex-col md:flex-row h-screen w-full overflow-hidden">
-
-    <!-- Left Image Section -->
-    <section class="md:flex flex-1 items-center justify-center bg-[#f5f5f5] border-r border-gray-300 h-screen">
-        <img 
-            src="{{ asset('images/login_image.png') }}" 
-            alt="Login illustration" 
-            class="w-full h-full object-cover"
-        />
-    </section>
-
-    <!-- Right Login Form Section -->
-    <section class="flex flex-[1.1] items-center justify-center">
+<x-guest-layout>
+<section class="flex flex-[1.1] items-center justify-center">
         <div class="w-11/12 max-w-lg px-4">
 
             <!-- Page heading -->
@@ -109,7 +73,4 @@
             </form>
         </div>
     </section>
-</main>
-
-</body>
-</html>
+</x-guest-layout>
