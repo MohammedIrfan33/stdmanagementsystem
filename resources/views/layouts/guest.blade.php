@@ -25,8 +25,6 @@
 
         
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 
     <body class="font-poppins bg-[#F6F7F9]">
