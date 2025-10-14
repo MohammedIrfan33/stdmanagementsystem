@@ -1,7 +1,5 @@
 @props(['title' => 'mypage'])
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,19 +11,37 @@
 
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/fontawesome.min.css"  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/solid.min.css"  />
 
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-</head>
-<body class="bg-gray-100">
-
-<x-nav></x-nav>
-
-{{ $slot }}
- 
 
   
+
+
+ 
+
+
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-gray-100 flex">
+
+
+
+
+
+  <!-- Sidebar -->
+  <x-nav></x-nav>
+
+  <!-- Main content area -->
+  <main class="flex-1 p-6 overflow-y-auto">
+    {{ $slot }}
+  </main>
+
 </body>
 </html>
