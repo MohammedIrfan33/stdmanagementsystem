@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Course;
 
@@ -29,6 +30,8 @@ class CourseController extends Controller
      public function store()
      {
 
+     
+
       
 
          // Validate form inputs
@@ -41,11 +44,15 @@ class CourseController extends Controller
      
          
          Course::create([
+             'user_id'  => Auth::id(),
              'name'     => $validated['course_name'],
              'duration' => $validated['duration'],
              'fees'     => $validated['fee'],
              'status'   => $validated['status'],
          ]);
+
+
+         return response()->json(['message' => 'Course added successfully!']);
      
       
         
@@ -93,7 +100,7 @@ class CourseController extends Controller
          return redirect('/courses')->with('success', 'Course updated successfully!');
      }
      
-     public function distroy($id){
+     public function destroy($id){
       $course = Course::findOrFail($id);
 
       $course->delete();

@@ -12,7 +12,13 @@
     <x-navlink href="{{ route('dashboard') }}" :linkapage="request()->routeIs('dashboard')" icon="fa-solid fa-house">Home</x-navlink>
     <x-navlink href="{{ route('course') }}" :linkapage="request()->routeIs('course')" icon="fa-solid fa-book-open">Course</x-navlink>
     <x-navlink href="{{ route('payments') }}" :linkapage="request()->routeIs('payments')" icon="fa-solid fa-credit-card">Payments</x-navlink>
+    <x-navlink href="#" :linkapage="request()->routeIs('profile')" icon="fa-solid fa-user">
+        Profile
+    </x-navlink>
     <x-navlink href="{{ route('aboutus') }}" :linkapage="request()->routeIs('aboutus')" icon="fa-solid fa-circle-info">About</x-navlink>
+
+   
+    
 
 </ul>
 
