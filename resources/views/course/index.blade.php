@@ -97,6 +97,8 @@ $(function(){
       
         const deleteUrl = "{{ route('delete-course', ['id' => 'USER_ID']) }}".replace('USER_ID', id);
 
+        
+
         $.ajax({
           url: deleteUrl,
           type: 'DELETE',

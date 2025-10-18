@@ -11,7 +11,7 @@ class Course  extends Model{
 
     use HasFactory;
 
-    protected $fillable = ["name","duration","fees","status"];
+    protected $fillable = ["name","duration","fees","status","user_id"];
 
     public static function find($id){
         $courses =  Course::all();

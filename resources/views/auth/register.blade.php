@@ -1,40 +1,9 @@
-{{-- resources/views/auth/register.blade.php --}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+<x-guest-layout>
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- jQuery + SweetAlert (optional for alerts) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-
-<body class="font-poppins bg-[#F6F7F9]">
-
-<main class="flex flex-col md:flex-row h-screen w-full overflow-hidden">
-
-    <!-- Left Image Section -->
-    <section class="md:flex flex-1 items-center justify-center bg-[#f5f5f5] border-r border-gray-300 h-screen">
-        <img 
-            src="{{ asset('images/login_image.png') }}" 
-            alt="Register illustration" 
-            class="w-full h-full object-cover"
-        />
-    </section>
-
-    <!-- Right Form Section -->
-    <section class="flex flex-[1.1] items-center justify-center">
+  <!-- Right Form Section -->
+  <section class="flex flex-[1.1] items-center justify-center">
         <div class="w-11/12 max-w-lg px-4">
 
             <!-- Heading -->
@@ -196,7 +165,5 @@
 
         </div>
     </section>
-</main>
+</x-guest-layout>
 
-</body>
-</html>
