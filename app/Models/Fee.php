@@ -42,4 +42,6 @@ class Fee extends Model
     {
         return $this->payment_date->format('d M, Y');
     }
+
+    
 }

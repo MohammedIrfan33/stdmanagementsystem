@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -51,6 +52,7 @@ class StudentController extends Controller
        
 
         Student::create([
+            'user_id'  => Auth::id(),
             'name'         => $validated['name'],
             'email'        => $validated['email'],
             'phone'        => $validated['phone'],

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->date('joining_date');
 
-            // Foreign key to courses table
+          
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')
                   ->references('id')
