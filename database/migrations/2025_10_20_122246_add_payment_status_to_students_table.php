@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('logo')->nullable()->after('email');
+        Schema::table('students', function (Blueprint $table) {
+            $table->enum('payment_status', ['notpaid' ,'ongoing', 'completed'])->default('ongoing');
+
+    
+            
         });
     }
 
@@ -21,10 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-
-            $table->dropColumn('logo');
-        
+        Schema::table('students', function (Blueprint $table) {
+            //
         });
     }
 };
