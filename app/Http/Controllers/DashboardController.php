@@ -30,13 +30,13 @@ class DashboardController extends Controller
         $totalFeesCollected = Fee::sum('amount');
 
         // Lists requested by user
-        $dueStudentsList = $students->filter(fn($s) => $s->due_payment > 0)->values();
+        $dueStudentsList = $students->filter(fn($s) => $s->due_payment > 0)->sortByDesc('created_at')->take(5)->values();
         $completedCourseStudentsList = $students->filter(function($s) {
             // balance_day is something like "-5 days" or "0 days" 
             $daysLeft = (int)$s->balance_day;
             // Only include if it completed within the last 7 days (including today)
             return $daysLeft <= 0 && $daysLeft >= -7;
-        })->values();
+        })->sortByDesc('created_at')->take(5)->values();
 
         return view('dashboard', compact(
             'totalStudents', 
