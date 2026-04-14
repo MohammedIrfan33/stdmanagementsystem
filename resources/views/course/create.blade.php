@@ -5,7 +5,7 @@
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-24">
       <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Add New Course</h1>
       <a href="/courses"
-         class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300">
+         class="inline-flex items-center text-teal-700 hover:text-teal-800 transition-colors duration-300">
          Back to Course List
       </a>
     </div>
@@ -23,7 +23,7 @@
               placeholder="e.g., Flutter Development"
               class="mt-2 block w-full rounded-md border-0 py-2 pl-4 shadow-sm ring-1 ring-inset 
               {{ $errors->has('course_name') ? 'ring-red-500' : 'ring-gray-300' }} 
-              placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+              placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
               aria-invalid="{{ $errors->has('course_name') ? 'true' : 'false' }}">
             @error('course_name')
               <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -36,7 +36,7 @@
             <input value="{{ old('duration') }}" type="text" name="duration" id="duration" placeholder="e.g., 3 Months"
               class="mt-2 block w-full rounded-md border-0 py-2 pl-4 shadow-sm ring-1 ring-inset 
               {{ $errors->has('duration') ? 'ring-red-500' : 'ring-gray-300' }} 
-              placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+              placeholder:text-gray-400 text-gray-900 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
               aria-invalid="{{ $errors->has('duration') ? 'true' : 'false' }}">
             @error('duration')
               <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -53,7 +53,7 @@
               </div>
               <input type="text" name="fee" id="fee" placeholder="15000" value="{{ old('fee') }}" class="block w-full rounded-md border-0 py-2 pl-7 pr-12 text-gray-900 ring-1 ring-inset 
                   {{ $errors->has('fee') ? 'ring-red-500' : 'ring-gray-300' }} 
-                  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm sm:leading-6"
                 aria-invalid="{{ $errors->has('fee') ? 'true' : 'false' }}">
             </div>
             @error('fee')
@@ -66,7 +66,7 @@
             <label for="status" class="block text-sm font-medium leading-6 text-gray-900">Status</label>
             <select id="status" name="status" class="mt-2 block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset
         {{ $errors->has('status') ? 'ring-red-500' : 'ring-gray-300' }}
-        focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:max-w-xs sm:text-sm sm:leading-6"
+        focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:max-w-xs sm:text-sm sm:leading-6"
               aria-invalid="{{ $errors->has('status') ? 'true' : 'false' }}">
               <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>Active</option>
               <option value="0" {{ old('status', 1) == 0 ? 'selected' : '' }}>Inactive</option>
@@ -83,7 +83,7 @@
           <button type="button" onclick="window.location.replace('/courses')"
             class="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700">Cancel</button>
           <button type="submit"
-            class="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            class="rounded-md bg-teal-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700">
             Save Course
           </button>
         </div>

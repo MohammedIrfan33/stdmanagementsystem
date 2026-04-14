@@ -12,7 +12,7 @@
         <div class="relative">
           <label for="studentSearch" class="block text-gray-700 font-medium mb-1">Select Student</label>
           <input type="text" id="search" placeholder="Type to search..."
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition">
 
           @error('student_id')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -30,7 +30,7 @@
         <div>
           <label class="block text-gray-700 font-medium mb-1">Amount</label>
           <input type="number" name="amount" value="{{ old('amount') }}" step="0.01" placeholder="Enter amount"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
             required>
           @error('amount')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -41,7 +41,7 @@
         <div>
           <label class="block text-gray-700 font-medium mb-1">Payment Date</label>
           <input type="date" name="payment_date" value="{{ old('payment_date') }}"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
             required>
           @error('payment_date')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -52,7 +52,7 @@
         <div>
           <label class="block text-gray-700 font-medium mb-1">Payment Mode</label>
           <select name="payment_mode"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition"
             required>
             <option value="">Select Payment Mode</option>
             <option value="Card" {{ old('payment_mode') == 'Card' ? 'selected' : '' }}>Card</option>
@@ -68,7 +68,7 @@
         <div>
           <label class="block text-gray-700 font-medium mb-1">Note</label>
           <textarea name="note" placeholder="Optional note" rows="3"
-            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">{{ old('note') }}</textarea>
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition">{{ old('note') }}</textarea>
         </div>
 
         <!-- Submit -->
@@ -89,7 +89,7 @@
     const studentListContainer = document.getElementById('studentList');
 
     // ✅ Pre-fill old student name if validation failed
-    const oldStudentId = "{{ old('student_id') }}";
+    const oldStudentId = "{{ old('student_id', request('student_id')) }}";
     if (oldStudentId) {
         const selectedStudent = studentList.find(s => s.id == oldStudentId);
         if (selectedStudent) {
@@ -110,12 +110,24 @@
 
            if(filteredStudents.length>0){
              filteredStudents.forEach(student => {
+                const isCompleted = student.due_payment <= 0;
                 const li = document.createElement('li');
-                li.textContent = student.name;
-                li.className = 'select-student pl-3 py-2 hover:bg-gray-100';
+                li.textContent = isCompleted ? `${student.name} (Completed)` : student.name;
+                li.className = isCompleted 
+                    ? 'select-student pl-3 py-2 text-gray-400 cursor-not-allowed bg-gray-50'
+                    : 'select-student pl-3 py-2 hover:bg-gray-100 cursor-pointer';
                 studentListContainer.appendChild(li);
 
                 li.addEventListener('click', () => {
+                    if (isCompleted) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Already Completed',
+                            text: `${student.name} has already fully paid their fees.`,
+                            confirmButtonColor: '#0f766e'
+                        });
+                        return;
+                    }
                     studentCard.classList.add('hidden');
                     input.value = student.name;
                     studentIdInput.value = student.id;

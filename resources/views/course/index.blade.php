@@ -3,7 +3,7 @@
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
       <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Course Listing</h1>
       <a href="{{route('add-course') }}"
-        class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
+        class="inline-flex items-center bg-teal-700 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-800 transition-colors duration-300">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd"
             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
@@ -47,7 +47,7 @@
                     Edit
                 </a>
                    
-                    <button  id="course-delete-btn" data-id="{{ $course['id'] }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700" >
+                    <button  id="course-delete-btn" data-id="{{ $course['id'] }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-700 hover:bg-teal-800" >
                         Delete
                     </button>
                 

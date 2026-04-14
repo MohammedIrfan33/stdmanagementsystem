@@ -43,7 +43,7 @@
                 <div class="flex items-center justify-end">
                 <div class="mt-4 w-full" >
     <button type="submit" 
-        class="w-full py-4 bg-teal-800 text-white text-xl font-medium rounded-xl hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200">
+        class="w-full py-4 bg-teal-700 text-white text-xl font-medium rounded-xl hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200">
         {{ __('Send Password Reset Link') }}
     </button>
 </div>

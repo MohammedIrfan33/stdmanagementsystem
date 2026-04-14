@@ -3,7 +3,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Student Management</h1>
             <a href="{{ route('add-student') }}"
-               class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300">
+               class="inline-flex items-center bg-teal-700 text-white px-4 py-2 rounded-lg shadow-md hover:bg-teal-800 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                           d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
@@ -51,8 +51,18 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $student->joining_date_formatted }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $student->end_date }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium align-middle opacity-70">{{ $student->balance_day }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">₹{{ $student->course->fees }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-red-600 align-middle">₹5,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">₹{{ $student->course ? $student->course->fees : 0 }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap align-middle">
+                                    @if ($student->due_payment <= 0)
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    @else
+                                        <span class="text-sm font-semibold text-red-600">
+                                            ₹{{ number_format($student->due_payment, 0) }}
+                                        </span>
+                                    @endif
+                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap align-middle">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                         <svg class="w-2.5 h-2.5 mr-1.5" fill="currentColor" viewBox="0 0 8 8">

@@ -33,7 +33,7 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', [StudentController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     // Profile
     Route::prefix('profile')->group(function () {
@@ -44,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Students
     Route::prefix('student')->group(function () {
+        Route::get('', [StudentController::class, 'index'])->name('students');
         Route::get('create', [StudentController::class, 'create'])->name('add-student');
         Route::post('', [StudentController::class, 'store'])->name('store-student');
         Route::get('edit/{id}', [StudentController::class, 'edit'])->name('edit-student');

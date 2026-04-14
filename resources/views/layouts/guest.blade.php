@@ -9,12 +9,23 @@
 
 
         <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Scripts -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -27,7 +38,7 @@
 
     </head>
 
-    <body class="font-poppins bg-[#F6F7F9]">
+    <body class="font-sans antialiased bg-[#F6F7F9]">
 
 <main class="flex flex-col md:flex-row h-screen w-full overflow-hidden">
 

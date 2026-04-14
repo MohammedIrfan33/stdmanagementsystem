@@ -64,7 +64,7 @@ class StudentController extends Controller
         
 
 
-       return redirect()->route('home');
+       return redirect()->route('students');
 
          
 
@@ -115,7 +115,7 @@ class StudentController extends Controller
         'joining_date' => $validated['joining_date'],
     ]);
 
-    return redirect()->route('dashboard')
+    return redirect()->route('students')
                      ->with('success', 'Student updated successfully.');
 }
 

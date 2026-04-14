@@ -82,4 +82,13 @@ class Student extends Model
         return ceil($balnceDays).' days';
     }
 
+    public function getDuePaymentAttribute()
+    {
+        if (!$this->course) {
+            return 0;
+        }
+        $totalFees = (float) $this->course->fees;
+        $paid = (float) $this->fees()->sum('amount');
+        return max(0, $totalFees - $paid);
+    }
 }

@@ -98,7 +98,6 @@
                         type="file"
                         name="logo"
                         accept="image/*"
-                        required
                         class="hidden"
                         onchange="document.getElementById('logoFileName').textContent = this.files[0]?.name || 'No file chosen';"
                     >
@@ -106,7 +105,7 @@
                     <!-- Custom button -->
                     <label 
                         for="logo"
-                        class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-teal-800 text-white text-sm font-medium rounded-md hover:bg-teal-700 transition"
+                        class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-teal-700 text-white text-sm font-medium rounded-md hover:bg-teal-800 transition"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
@@ -121,7 +120,7 @@
 
                 <!-- Register Button -->
                 <div class="flex items-center justify-between mt-6">
-                    <button type="submit" class="w-full bg-teal-800 hover:bg-teal-900 text-white px-6 py-3 rounded-xl text-lg transition">
+                    <button type="submit" class="w-full bg-teal-700 hover:bg-teal-800 text-white px-6 py-3 rounded-xl text-lg transition">
                         Register
                     </button>
                 </div>

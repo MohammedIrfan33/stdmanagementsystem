@@ -23,7 +23,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Payment Management</h1>
             <a href="{{ route('add-payment') }}"
-               class="inline-flex items-center bg-blue-600 text-white px-5 py-2.5 rounded-lg card-shadow hover:bg-blue-700 transition-colors duration-300 text-base">
+               class="inline-flex items-center bg-teal-700 text-white px-5 py-2.5 rounded-lg card-shadow hover:bg-teal-800 transition-colors duration-300 text-base">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                           d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
@@ -79,7 +79,7 @@
             <div class="bg-white p-5 rounded-lg card-shadow flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500">Total Payments</p>
-                    <p class="text-2xl font-bold text-gray-800 mt-1">₹86,500</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">₹{{ number_format($totalPayments, 0) }}</p>
                 </div>
                 <div class="bg-blue-100 p-3 rounded-full flex-shrink-0">
                     <i class="fas fa-receipt text-blue-600 text-xl"></i>
@@ -89,7 +89,7 @@
             <div class="bg-white p-5 rounded-lg card-shadow flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500">Pending Payments</p>
-                    <p class="text-2xl font-bold text-gray-800 mt-1">₹12,800</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">₹{{ number_format($pendingPayments, 0) }}</p>
                 </div>
                 <div class="bg-yellow-100 p-3 rounded-full flex-shrink-0">
                     <i class="fas fa-clock text-yellow-600 text-xl"></i>
@@ -99,7 +99,7 @@
             <div class="bg-white p-5 rounded-lg card-shadow flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-500">This Month</p>
-                    <p class="text-2xl font-bold text-gray-800 mt-1">₹24,300</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-1">₹{{ number_format($thisMonthPayments, 0) }}</p>
                 </div>
                 <div class="bg-green-100 p-3 rounded-full flex-shrink-0">
                     <i class="fas fa-calendar text-green-600 text-xl"></i>
@@ -116,6 +116,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Student</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Course</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Due Balance</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Payment Date</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Payment Mode</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Note</th>
@@ -140,10 +141,21 @@
                                 <p class="text-xs text-gray-500 mt-1">{{ $fee->student->email }}</p>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 align-middle">
-                                {{ $fee->student->course->name }}
+                                {{ $fee->student->course ? $fee->student->course->name : 'N/A' }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800 align-middle">
                                 ₹{{ $fee->amount }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap align-middle">
+                                @if ($fee->student->due_payment <= 0)
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Completed
+                                    </span>
+                                @else
+                                    <span class="text-sm font-bold text-red-600">
+                                        ₹{{ number_format($fee->student->due_payment, 0) }}
+                                    </span>
+                                @endif
                             </td>
                               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 align-middle">{{ $fee->payment_date_formatted}}</td>
                             <td class="px-6 py-4 whitespace-nowrap align-middle">

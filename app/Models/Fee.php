@@ -9,6 +9,7 @@ class Fee extends Model
 {
 
     protected $fillable = [
+        'user_id',
         'student_id',
         'amount',
         'payment_date',

@@ -8,26 +8,40 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Fee;
+use Illuminate\Support\Facades\Auth;
 
 class FeesController extends Controller
 {
    public function index(Request $request)
    {
-
       $fees = Fee::latest()->paginate(10);
+
+      $totalPayments = Fee::sum('amount');
+      $thisMonthPayments = Fee::whereMonth('payment_date', \Carbon\Carbon::now()->month)
+                            ->whereYear('payment_date', \Carbon\Carbon::now()->year)
+                            ->sum('amount');
+      
+      $students = Student::with(['course', 'fees'])->get();
+      $pendingPayments = $students->sum(function($student) {
+          return $student->due_payment;
+      });
 
        if ($request->ajax()) {
         return view('fees.partials.fees_table', compact('fees'))->render();
       }
 
-
-      return view('payment.index',['fees' => $fees]);
+      return view('payment.index',[
+          'fees' => $fees,
+          'totalPayments' => $totalPayments,
+          'thisMonthPayments' => $thisMonthPayments,
+          'pendingPayments' => $pendingPayments
+      ]);
    }
 
    public function create()
    {
 
-      $students = Student::all();
+      $students = Student::with(['course', 'fees'])->get()->append('due_payment');
 
 
       return view('payment.create', ['students' => $students]);
@@ -70,7 +84,8 @@ class FeesController extends Controller
 
          
 
-        $fee =   Fee::create($validatedData);
+        $validatedData['user_id'] = Auth::id();
+        $fee = Fee::create($validatedData);
 
 
          return redirect()->route('payments')->with('success', ' Payment added successfully' . $fee->student->name);

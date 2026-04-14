@@ -4,7 +4,7 @@
   <div class="w-full px-4 sm:px-8 mt-10">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
       <h1 class="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Edit Student</h1>
-      <a href="/students" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300">
+      <a href="{{ route('students') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
@@ -127,8 +127,8 @@
 
         <!-- Action Buttons -->
         <div class="mt-6 flex justify-end gap-x-4">
-          <a href="{{ route('home') }}" class="px-6 py-2.5 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100">Cancel</a>
-          <button type="submit" class="rounded-md bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700">Update Student</button>
+          <a href="{{ route('students') }}" class="px-6 py-2.5 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100">Cancel</a>
+          <button type="submit" class="rounded-md bg-teal-700 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-800">Update Student</button>
         </div>
       </form>
     </div>

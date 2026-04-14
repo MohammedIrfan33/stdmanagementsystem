@@ -8,6 +8,7 @@
 
     <ul class="flex flex-col gap-4 w-full mt-10">
         <x-navlink href="{{ route('dashboard') }}" :linkapage="request()->routeIs('dashboard')" icon="fa-solid fa-house">Home</x-navlink>
+        <x-navlink href="{{ route('students') }}" :linkapage="request()->routeIs('students')" icon="fa-solid fa-users">Students</x-navlink>
         <x-navlink href="{{ route('course') }}" :linkapage="request()->routeIs('course')" icon="fa-solid fa-book-open">Course</x-navlink>
         <x-navlink href="{{ route('payments') }}" :linkapage="request()->routeIs('payments')" icon="fa-solid fa-credit-card">Payments</x-navlink>
         <x-navlink href="#" :linkapage="request()->routeIs('profile')" icon="fa-solid fa-user">Profile</x-navlink>

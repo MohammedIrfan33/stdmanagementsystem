@@ -5,7 +5,7 @@
 
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10">
       <h1 class="text-3xl font-extrabold text-gray-900 mb-2 sm:mb-0">Add New Student</h1>
-      <a href="/students"
+      <a href="{{ route('students') }}"
         class="inline-flex items-center text-gray-600 hover:text-gray-800 transition-colors duration-300 group -mr-2 p-2 rounded-md">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform"
           fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -130,8 +130,8 @@
               <!-- Add Payment Button -->
                <div class="mt-6 flex justify-end w-full">
   <button type="button"
-    @click="window.location.href = `/payements`"
-    class="rounded-md bg-gray-800 px-6 py-2.5 text-base font-semibold text-white shadow-sm focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-green-700">
+    @click="window.location.href = `{{ route('add-payment') }}`"
+    class="rounded-md bg-teal-700 px-6 py-2.5 text-base font-semibold text-white shadow-sm focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-teal-700">
     Add Payment
   </button>
 </div>
@@ -144,9 +144,9 @@
 
         <!-- Action Buttons -->
         <div class="mt-10 flex items-center justify-end gap-x-4">
-          <a href="/students" class="px-6 py-2.5 text-base font-medium text-gray-700 rounded-md hover:bg-gray-100 transition">Cancel</a>
+          <a href="{{ route('students') }}" class="px-6 py-2.5 text-base font-medium text-gray-700 rounded-md hover:bg-gray-100 transition">Cancel</a>
           <button type="submit"
-            class="rounded-md bg-gray-800 px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:bg-gray-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-gray-900">
+            class="rounded-md bg-teal-700 px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:bg-teal-800 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-teal-800">
             Save Student
           </button>
         </div>

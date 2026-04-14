@@ -15,7 +15,7 @@
                 <label class="block text-gray-700 font-medium mb-1">Student</label>
                 <input type="text" name="student_name" id="search"
                     value="{{ old('student_name', $fee->student->name) }}"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition @error('student_id') border-red-500 @enderror"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('student_id') border-red-500 @enderror"
                     placeholder="Search student...">
 
                 <input type="hidden" name="student_id" id="studentId" value="{{ old('student_id', $fee->student_id) }}">
@@ -35,7 +35,7 @@
                 <label class="block text-gray-700 font-medium mb-1">Amount</label>
                 <input type="number" name="amount" 
                     value="{{ old('amount', $fee->amount) }}" step="0.01"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition @error('amount') border-red-500 @enderror"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('amount') border-red-500 @enderror"
                     required>
 
                 @error('amount')
@@ -48,7 +48,7 @@
                 <label class="block text-gray-700 font-medium mb-1">Payment Date</label>
                 <input type="date" name="payment_date" 
                     value="{{ old('payment_date', $fee->payment_date) }}"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition @error('payment_date') border-red-500 @enderror"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('payment_date') border-red-500 @enderror"
                     required>
 
                 @error('payment_date')
@@ -60,7 +60,7 @@
             <div>
                 <label class="block text-gray-700 font-medium mb-1">Payment Mode</label>
                 <select name="payment_mode"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition @error('payment_mode') border-red-500 @enderror"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('payment_mode') border-red-500 @enderror"
                     required>
                     <option value="">Select Payment Mode</option>
                     <option value="Card" {{ old('payment_mode', $fee->payment_mode) == 'Card' ? 'selected' : '' }}>Card</option>
@@ -77,7 +77,7 @@
             <div>
                 <label class="block text-gray-700 font-medium mb-1">Note</label>
                 <textarea name="note" rows="3"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition @error('note') border-red-500 @enderror">{{ old('note', $fee->note) }}</textarea>
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition @error('note') border-red-500 @enderror">{{ old('note', $fee->note) }}</textarea>
 
                 @error('note')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
