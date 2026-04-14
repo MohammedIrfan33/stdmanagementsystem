@@ -80,6 +80,15 @@ class FeesController extends Controller
          ]
       );
 
+      $student = Student::findOrFail($validatedData['student_id']);
+      $totalFees = $student->course ? (float) $student->course->fees : 0;
+      $paid = (float) $student->fees()->sum('amount');
+      $remaining = $totalFees - $paid;
+
+      if ($validatedData['amount'] > $remaining) {
+          return back()->withErrors(['amount' => 'Payment exceeds the total course amount. (Due: ' . $remaining . ')'])->withInput();
+      }
+
       try {
 
          
@@ -174,6 +183,15 @@ public function update(Request $request, $id)
     );
 
    
+
+    $student = Student::findOrFail($validatedData['student_id']);
+    $totalFees = $student->course ? (float) $student->course->fees : 0;
+    $paid = (float) $student->fees()->where('id', '!=', $fee->id)->sum('amount');
+    $remaining = $totalFees - $paid;
+
+    if ($validatedData['amount'] > $remaining) {
+        return back()->withErrors(['amount' => 'Payment exceeds the total course amount. (Due: ' . $remaining . ')'])->withInput();
+    }
 
     try {
         $fee->update($validatedData);
